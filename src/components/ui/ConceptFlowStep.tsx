@@ -40,9 +40,7 @@ export function ConceptFlowStep({
         ref={isSingleStep ? activeRef : undefined}
         className={isSingleStep ? "toss-active-step" : "toss-concept-overview-step"}
       >
-        <ProgressiveReveal show scrollOnReveal={false} settled={false}>
-          {children}
-        </ProgressiveReveal>
+        {children}
       </div>
     );
   }

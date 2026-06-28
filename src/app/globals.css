@@ -3136,9 +3136,26 @@ button.toss-readiness-row.is-action:hover {
   .toss-modal-panel-prompt,
   .toss-modal-panel-confirm,
   .toss-modal-panel-modal {
+    min-height: min(
+      70dvh,
+      calc(100dvh - var(--toss-bottom-sheet-inset-bottom) - env(safe-area-inset-bottom, 0px) - 12px)
+    );
     max-height: calc(
       100dvh - var(--toss-bottom-sheet-inset-bottom) - env(safe-area-inset-bottom, 0px) - 12px
     );
+  }
+
+  .toss-modal-panel-modal .toss-modal-body {
+    flex: 1 1 0;
+    min-height: 0;
+    padding-bottom: 12px;
+  }
+
+  .toss-modal-panel-prompt .toss-modal-body,
+  .toss-modal-panel-confirm .toss-modal-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding-bottom: 12px;
   }
 
   .toss-modal-body {

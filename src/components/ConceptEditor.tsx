@@ -152,7 +152,11 @@ function TropePicker({
   onRequestOpenHandled?: () => void;
 }) {
   const [search, setSearch] = useState("");
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState(recommended.length === 0);
+
+  useEffect(() => {
+    if (recommended.length === 0) setShowAll(true);
+  }, [recommended.length]);
 
   const options = useMemo(() => {
     const q = search.trim().toLowerCase();

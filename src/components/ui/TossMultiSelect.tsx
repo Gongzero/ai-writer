@@ -169,7 +169,7 @@ export function TossMultiSelect({
     };
   }, [open, setOpen]);
 
-  if (options.length === 0) return null;
+  const showEmptyOptions = options.length === 0;
 
   return (
     <div ref={rootRef} className="toss-select-root toss-bible-form-field-block">
@@ -199,34 +199,45 @@ export function TossMultiSelect({
           <div className="toss-multi-select-panel">
             {headerExtra ? <div className="toss-multi-select-header">{headerExtra}</div> : null}
             <div className="toss-multi-select-body">
-              <ul className="toss-multi-select-list">
-                {options.map((option) => {
-                  const checked = draft.includes(option.id);
-                  return (
-                    <li key={option.id}>
-                      <div className="toss-multi-option">
-                        <TossCheckbox
-                          checked={checked}
-                          onChange={(on) => toggleDraft(option.id, on)}
-                          label={option.label}
-                        />
-                        <span className="min-w-0 flex-1">
-                          <span className="block text-[16px] font-medium leading-snug text-[var(--foreground)]">
-                            {option.label}
-                          </span>
-                          {option.description ? (
-                            <span className="mt-0.5 block text-[13px] leading-snug text-[var(--toss-gray-400)]">
-                              {option.description}
+              {showEmptyOptions ? (
+                <p className="px-1 py-3 text-center text-[14px] text-[var(--toss-gray-600)]">
+                  표시할 태그가 없어요. 검색하거나 전체 태그 보기를 눌러 주세요.
+                </p>
+              ) : (
+                <ul className="toss-multi-select-list">
+                  {options.map((option) => {
+                    const checked = draft.includes(option.id);
+                    return (
+                      <li key={option.id}>
+                        <div className="toss-multi-option">
+                          <TossCheckbox
+                            checked={checked}
+                            onChange={(on) => toggleDraft(option.id, on)}
+                            label={option.label}
+                          />
+                          <span className="min-w-0 flex-1">
+                            <span className="block text-[16px] font-medium leading-snug text-[var(--foreground)]">
+                              {option.label}
                             </span>
-                          ) : null}
-                        </span>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
+                            {option.description ? (
+                              <span className="mt-0.5 block text-[13px] leading-snug text-[var(--toss-gray-400)]">
+                                {option.description}
+                              </span>
+                            ) : null}
+                          </span>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
               {footerExtra}
-              <button type="button" onClick={confirm} className="toss-btn-confirm">
+              <button
+                type="button"
+                onClick={confirm}
+                className="toss-btn-confirm"
+                disabled={showEmptyOptions}
+              >
                 {draft.length}개 선택 완료
               </button>
             </div>
