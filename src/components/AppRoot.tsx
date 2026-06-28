@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { CreateNovelModal } from "@/components/home/CreateNovelModal";
 import { CreateWizardModal } from "@/components/home/CreateWizardModal";
@@ -30,6 +30,26 @@ export function AppRoot() {
   const [actionError, setActionError] = useState<string | null>(null);
   const [importError, setImportError] = useState<string | null>(null);
   const [importingJson, setImportingJson] = useState(false);
+
+  const authError = useMemo(() => {
+    if (typeof window === "undefined") return null;
+    const code = new URLSearchParams(window.location.search).get("auth_error");
+    if (!code) return null;
+    if (code === "missing_code" || code === "exchange_failed") {
+      return "로그인에 실패했어요. 다시 시도해 주세요.";
+    }
+    if (code === "not_configured") {
+      return "로그인 설정이 아직 완료되지 않았어요.";
+    }
+    return "로그인 중 문제가 생겼어요.";
+  }, []);
+
+  useEffect(() => {
+    if (!authError) return;
+    const url = new URL(window.location.href);
+    url.searchParams.delete("auth_error");
+    window.history.replaceState({}, "", url.pathname + url.search);
+  }, [authError]);
 
   const refreshLibrary = useCallback(async () => {
     setLibraryLoading(true);
@@ -132,6 +152,7 @@ export function AppRoot() {
         <AppShell key={editorKey} onExit={() => setView("home")} />
       ) : (
         <HomeScreen
+          authError={authError}
           onCreate={() => {
             setActionError(null);
             setCreateModalOpen(true);
