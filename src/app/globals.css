@@ -1469,8 +1469,11 @@ body {
   margin-top: 8px;
 }
 
-.toss-select-panel-inner {
-  overflow: hidden;
+.toss-select-panel-open .toss-select-panel-inner {
+  max-height: min(72vh, 560px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .toss-step-summary-label {
@@ -1535,6 +1538,8 @@ body {
 }
 
 .toss-multi-select-body {
+  display: flex;
+  flex-direction: column;
   padding: 4px 12px 12px;
 }
 
@@ -1542,6 +1547,12 @@ body {
   margin: 0;
   padding: 0;
   list-style: none;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: min(52vh, 480px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .toss-multi-option {
@@ -3083,6 +3094,18 @@ button.toss-readiness-row.is-action:hover {
     );
   }
 
+  .toss-modal-panel {
+    animation: toss-bottom-sheet-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+    height: auto;
+    max-height: calc(
+      100dvh - var(--toss-bottom-sheet-inset-bottom) - env(safe-area-inset-bottom, 0px) - 12px
+    );
+    border-radius: var(--toss-bottom-sheet-radius);
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.14),
+      0 2px 10px rgba(0, 0, 0, 0.06);
+  }
+
   .toss-modal-panel:has(.toss-bottom-sheet-handle) .toss-modal-close-btn {
     display: none;
   }
@@ -3091,27 +3114,34 @@ button.toss-readiness-row.is-action:hover {
     padding-top: 8px;
   }
 
-  .toss-modal-panel {
-    animation: toss-bottom-sheet-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
-    height: auto;
-    border-radius: var(--toss-bottom-sheet-radius);
-    box-shadow:
-      0 12px 40px rgba(0, 0, 0, 0.14),
-      0 2px 10px rgba(0, 0, 0, 0.06);
-  }
-
   .toss-modal-panel-prompt,
-  .toss-modal-panel-confirm {
-    max-height: min(92vh, var(--toss-modal-prompt-max-height));
+  .toss-modal-panel-confirm,
+  .toss-modal-panel-modal {
+    max-height: calc(
+      100dvh - var(--toss-bottom-sheet-inset-bottom) - env(safe-area-inset-bottom, 0px) - 12px
+    );
   }
 
   .toss-modal-body {
+    flex: 1 1 auto;
+    min-height: 0;
     padding-bottom: 12px;
   }
 
   .toss-modal-footer {
+    flex-shrink: 0;
     padding-top: 12px;
-    padding-bottom: 16px;
+    padding-bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  }
+
+  /* 모달 안 옵션 패널 — 뷰포트에 맞게 줄이고 목록만 스크롤 */
+  .toss-modal-body .toss-select-panel-open,
+  .toss-modal-body .toss-select-panel-open .toss-select-panel-inner {
+    max-height: min(38vh, 320px);
+  }
+
+  .toss-modal-body .toss-multi-select-list {
+    max-height: min(34vh, 280px);
   }
 
   .toss-readiness-card {

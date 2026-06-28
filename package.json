@@ -7,6 +7,7 @@
     "dev:clean": "node scripts/kill-dev-ports.mjs && rm -rf .next && node scripts/dev.mjs",
     "dev:fresh": "node scripts/kill-dev-ports.mjs && rm -rf .next && node scripts/dev.mjs",
     "build": "node scripts/build.mjs",
+    "ship": "node scripts/ship.mjs",
     "start": "next start",
     "lint": "next lint"
   },
