@@ -5,6 +5,7 @@ import { ModalShell } from "@/components/home/ModalShell";
 import { useDeleteConfirm } from "@/hooks/useDeleteConfirm";
 import { deleteProject, saveProject } from "@/lib/db";
 import { GEMINI_MODEL_OPTIONS } from "@/lib/gemini-models";
+import { downloadProjectJson } from "@/lib/project-transfer";
 import type { ProjectData, ProjectSettings } from "@/lib/types";
 
 type SettingsSection = "work" | "ai";
@@ -78,6 +79,20 @@ export function SettingsModal({
 
   const handleDeleteClick = () => {
     requestDelete(runDelete);
+  };
+
+  const handleExportJson = () => {
+    const snapshot: ProjectData = {
+      ...project,
+      meta: { ...project.meta, title: title.trim() },
+      settings: {
+        ...project.settings,
+        apiKey: draft.apiKey,
+        model: draft.model,
+        defaultChapterLength: draft.defaultChapterLength,
+      },
+    };
+    downloadProjectJson(snapshot);
   };
 
   return (
@@ -155,6 +170,21 @@ export function SettingsModal({
                 새 화를 만들 때 기본으로 적용됩니다.
               </p>
             </label>
+
+            <div className="toss-project-transfer">
+              <p className="toss-field-label">다른 기기로 옮기기</p>
+              <p className="toss-field-hint">
+                컨셉·바이블·회차 뼈대·원고가 JSON 파일 하나로 저장돼요.
+              </p>
+              <button
+                type="button"
+                onClick={handleExportJson}
+                disabled={saving || deleting}
+                className="toss-btn-secondary mt-3 w-full py-3.5 text-[15px]"
+              >
+                작품 JSON 내보내기
+              </button>
+            </div>
           </div>
         )}
 
