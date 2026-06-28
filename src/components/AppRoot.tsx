@@ -8,9 +8,11 @@ import { HomeScreen } from "@/components/home/HomeScreen";
 import { LoadNovelModal } from "@/components/home/LoadNovelModal";
 import {
   createNewProject,
+  importProjectJson,
   listProjects,
   openProject,
 } from "@/lib/db";
+import { readJsonFile } from "@/lib/project-transfer";
 import { createWizardProject, type ProjectData, type ProjectSummary } from "@/lib/types";
 
 type View = "home" | "editor";
@@ -26,6 +28,8 @@ export function AppRoot() {
   const [wizardDraft, setWizardDraft] = useState<ProjectData | null>(null);
   const [editorKey, setEditorKey] = useState(0);
   const [actionError, setActionError] = useState<string | null>(null);
+  const [importError, setImportError] = useState<string | null>(null);
+  const [importingJson, setImportingJson] = useState(false);
 
   const refreshLibrary = useCallback(async () => {
     setLibraryLoading(true);
@@ -96,6 +100,24 @@ export function AppRoot() {
     }
   };
 
+  const handleImportJson = async (file: File) => {
+    setImportError(null);
+    setImportingJson(true);
+    try {
+      const json = await readJsonFile(file);
+      await importProjectJson(json);
+      setLoadModalOpen(false);
+      enterEditor();
+    } catch (e) {
+      console.error("import json failed:", e);
+      setImportError(
+        e instanceof Error ? e.message : "JSON 파일을 가져오지 못했어요."
+      );
+    } finally {
+      setImportingJson(false);
+    }
+  };
+
   return (
     <>
       {actionError && (
@@ -116,6 +138,7 @@ export function AppRoot() {
           }}
           onLoad={() => {
             setActionError(null);
+            setImportError(null);
             setLibraryReady(false);
             setLibraryLoading(true);
             setLoadModalOpen(true);
@@ -128,6 +151,8 @@ export function AppRoot() {
         projects={projects}
         loading={libraryLoading}
         ready={libraryReady}
+        importing={importingJson}
+        importError={importError}
         onClose={() => setLoadModalOpen(false)}
         onSelect={(id) => {
           setLoadModalOpen(false);
@@ -137,6 +162,7 @@ export function AppRoot() {
           setLoadModalOpen(false);
           setCreateModalOpen(true);
         }}
+        onImportJson={(file) => void handleImportJson(file)}
       />
 
       <CreateNovelModal

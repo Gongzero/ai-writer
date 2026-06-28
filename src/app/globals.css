@@ -3045,6 +3045,25 @@ button.toss-readiness-row.is-action:hover {
   margin: 0;
 }
 
+.toss-load-novel-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.toss-load-novel-import {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 4px;
+  border-top: 1px solid var(--toss-gray-200);
+}
+
+.toss-project-transfer {
+  padding-top: 8px;
+  border-top: 1px solid var(--toss-gray-200);
+}
+
 .toss-readiness-callout {
   border-radius: 12px;
   background: var(--toss-gray-100);

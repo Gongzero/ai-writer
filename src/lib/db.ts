@@ -468,11 +468,26 @@ export async function exportProjectJson(): Promise<string> {
 }
 
 export async function importProjectJson(json: string): Promise<ProjectData> {
-  const parsed = JSON.parse(json) as ProjectData;
+  let parsed: ProjectData;
+  try {
+    parsed = JSON.parse(json) as ProjectData;
+  } catch {
+    throw new Error("JSON 파일을 읽을 수 없어요.");
+  }
   if (parsed.version !== 1) {
     throw new Error("지원하지 않는 프로젝트 버전입니다.");
   }
+  if (!parsed.meta || !parsed.settings || !Array.isArray(parsed.chapters)) {
+    throw new Error("작품 파일 형식이 올바르지 않아요.");
+  }
   if (!parsed.id) parsed.id = uid("proj");
+  if (!parsed.arcOutline) parsed.arcOutline = [];
+  if (!parsed.bibleFiles) parsed.bibleFiles = [];
+  if (!parsed.categories) parsed.categories = [];
+  if (!parsed.subfolders) parsed.subfolders = [];
+  if (!parsed.synopsis) parsed.synopsis = { perChapter: [], rollups: [] };
+
+  migrateProjectShape(parsed);
   await saveProject(parsed);
   await setActiveProjectId(parsed.id);
   return parsed;
