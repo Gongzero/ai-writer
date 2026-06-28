@@ -9,7 +9,7 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from "react";
 
-const MOBILE_MQ = "(max-width: 639px)";
+const MOBILE_MQ = "(max-width: 767px)";
 const CLOSE_RATIO = 0.22;
 const SNAP_MS = 280;
 

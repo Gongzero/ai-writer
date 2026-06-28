@@ -2859,7 +2859,7 @@ button.toss-readiness-row.is-action:hover {
   max-width: var(--toss-modal-width);
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .toss-modal-panel-modal {
     width: var(--toss-modal-width);
     height: var(--toss-modal-height);
@@ -2876,7 +2876,7 @@ button.toss-readiness-row.is-action:hover {
   max-width: var(--toss-modal-prompt-width);
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .toss-modal-panel-prompt {
     width: var(--toss-modal-prompt-width);
     height: auto;
@@ -2894,7 +2894,7 @@ button.toss-readiness-row.is-action:hover {
   max-width: var(--toss-modal-confirm-width);
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .toss-modal-panel-confirm {
     height: auto;
     max-height: min(90vh, 360px);
@@ -3104,7 +3104,7 @@ button.toss-readiness-row.is-action:hover {
   color: #163a6e;
 }
 
-@media (max-width: 639px) {
+@media (max-width: 767px) {
   .toss-modal-host {
     padding-right: var(--toss-bottom-sheet-inset-x);
     padding-left: var(--toss-bottom-sheet-inset-x);
@@ -3133,29 +3133,20 @@ button.toss-readiness-row.is-action:hover {
     padding-top: 8px;
   }
 
+  .toss-modal-panel-modal,
   .toss-modal-panel-prompt,
-  .toss-modal-panel-confirm,
-  .toss-modal-panel-modal {
-    min-height: min(
-      70dvh,
-      calc(100dvh - var(--toss-bottom-sheet-inset-bottom) - env(safe-area-inset-bottom, 0px) - 12px)
-    );
-    max-height: calc(
-      100dvh - var(--toss-bottom-sheet-inset-bottom) - env(safe-area-inset-bottom, 0px) - 12px
-    );
+  .toss-modal-panel-confirm {
+    width: 100%;
+    max-width: none;
   }
 
   .toss-modal-panel-modal .toss-modal-body {
-    flex: 1 1 0;
+    flex: 0 1 auto;
     min-height: 0;
-    padding-bottom: 12px;
-  }
-
-  .toss-modal-panel-prompt .toss-modal-body,
-  .toss-modal-panel-confirm .toss-modal-body {
-    flex: 1 1 auto;
-    min-height: 0;
-    padding-bottom: 12px;
+    max-height: calc(
+      100dvh - var(--toss-bottom-sheet-inset-bottom) - env(safe-area-inset-bottom, 0px) - 148px
+    );
+    overflow-y: auto;
   }
 
   .toss-modal-body {
@@ -3217,7 +3208,7 @@ button.toss-readiness-row.is-action:hover {
   }
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .toss-modal-host {
     align-items: center;
     padding: 16px;

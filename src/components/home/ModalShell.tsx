@@ -71,7 +71,7 @@ export function ModalShell({
         onClick={(e) => e.stopPropagation()}
       >
         <div
-          className="toss-bottom-sheet-handle sm:hidden"
+          className="toss-bottom-sheet-handle md:hidden"
           role="presentation"
           aria-hidden
           {...handleProps}
