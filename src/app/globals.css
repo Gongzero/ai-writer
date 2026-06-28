@@ -3736,6 +3736,90 @@ button.toss-readiness-row.is-action:hover {
   }
 }
 
+/* ── 홈 로그인 (카카오 / Google) ── */
+.toss-home-greeting {
+  margin-bottom: 0.75rem;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.toss-home-signout {
+  margin-top: 1.25rem;
+  font-size: 14px;
+  color: var(--toss-gray-600);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.toss-home-signout:hover:not(:disabled) {
+  color: var(--foreground);
+}
+
+.toss-home-signout:disabled {
+  opacity: 0.55;
+}
+
+.toss-auth-greeting-name {
+  color: var(--toss-blue-500);
+}
+
+.toss-auth-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.toss-auth-btn {
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  padding: 0.875rem 1rem;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: opacity 0.15s ease;
+}
+
+.toss-auth-btn-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+.toss-auth-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.toss-auth-btn-kakao {
+  background: #fee500;
+  color: #191600;
+}
+
+.toss-auth-btn-kakao:hover:not(:disabled) {
+  background: #f5dc00;
+}
+
+.toss-auth-btn-google {
+  background: #fff;
+  color: var(--foreground);
+  border: 1px solid var(--toss-gray-300);
+}
+
+.toss-auth-btn-google:hover:not(:disabled) {
+  background: var(--toss-gray-50);
+}
+
+.toss-auth-error {
+  font-size: 13px;
+  line-height: 1.45;
+  color: #e42939;
+  text-align: center;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .toss-reveal,
   .toss-step-enter,

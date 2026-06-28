@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState, type ComponentType } from "react";
+import { AuthProvider } from "@/components/auth/AuthProvider";
 import { ClientErrorBoundary } from "@/components/ClientErrorBoundary";
 
 function isChunkOrCacheError(message: string) {
@@ -118,7 +119,9 @@ export function AppClient() {
 
   return (
     <ClientErrorBoundary>
-      <AppRoot />
+      <AuthProvider>
+        <AppRoot />
+      </AuthProvider>
     </ClientErrorBoundary>
   );
 }
